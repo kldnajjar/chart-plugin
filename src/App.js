@@ -1,8 +1,14 @@
 import React from "react";
-import Charts from "./components/charts";
+import MemoizedNavbar from "./components/navbar";
+import Dashboard from "./pages/dashboard";
 
 function App() {
-  return <Charts />;
+  return (
+    <React.Fragment>
+      <MemoizedNavbar />
+      <Dashboard />
+    </React.Fragment>
+  );
 }
 
 export default App;
