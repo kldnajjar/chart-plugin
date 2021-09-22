@@ -41,20 +41,20 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 ## Dynamic Dashboard Configuration
 
-under `src/pages/dashboard/config.json`, you can define the content
+configurator file path `src/pages/dashboard/config.json`
 
-- You need to figure out where to show it (main, side)
-- Add the parent number as a priority
-- Anything related to the container under `widget`
-- Anything related to the component under `component_config`
-- Under `widget` you can use the following:
+- You have to main containers, main & side dom
+- Add the parent number in the configurator file as a priority
+- Anything related to the container configuration will be under `widget`
+- Anything related to the component configuration will be under `component_config`
+- Under `widget` you can use the following attributes:
   - type
   - title
   - class
   - size
   - width
   - height
-- Under `component_config` you can use the library props or you own created props
+- Under `component_config` you can use the libraries props or you own created
 - Chart library link [react-google-charts](https://react-google-charts.com/)
 
 ## Learn More
