@@ -54,3 +54,9 @@ table.google-visualization-table-table {
   height: 100%;
   margin-right: 30px;
 }
+
+@media only screen and (max-width: 768px) {
+  .table-chart-container .card-body {
+    overflow-x: auto;
+  }
+}

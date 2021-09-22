@@ -48,13 +48,12 @@
             "widget":{
                 "type": "chart",
                 "title": "Chart 3",
-                "class": "chart-container",
+                "class": "chart-container table-chart-container",
                 "size": 7
             },
             "component_config":{
                 "type": "Table",
                 "width": "500px",
-                "class": "table-chart-container",
                 "options": {
                     "showRowNumber": true
                 },
