@@ -41,7 +41,7 @@ function drawComponent(result) {
 
         return (
           <Col
-            md={json_obj.widget.size || 12}
+            lg={json_obj.widget.size || 12}
             className={json_obj.widget.class ? json_obj.widget.class : ""}
             key={`widget-priority-${item}`}
             style={widget_style.width !== "auto" ? widget_style : {}}
@@ -64,8 +64,12 @@ function Dashboard() {
   return (
     <Container>
       <Row>
-        <Col md={9}>{drawComponent(chartConfiguration.main)}</Col>
-        <Col md={3}>{drawComponent(chartConfiguration.side)}</Col>
+        <Col xl={9} lg={12}>
+          {drawComponent(chartConfiguration.main)}
+        </Col>
+        <Col xl={3} lg={12}>
+          {drawComponent(chartConfiguration.side)}
+        </Col>
       </Row>
     </Container>
   );
