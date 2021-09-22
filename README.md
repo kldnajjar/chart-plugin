@@ -39,6 +39,24 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
+## Dynamic Dashboard Configuration
+
+under `src/pages/dashboard/config.json`, you can define the content
+
+- You need to figure out where to show it (main, side)
+- Add the parent number as a priority
+- Anything related to the container under `widget`
+- Anything related to the component under `component_config`
+- Under `widget` you can use the following:
+  - type
+  - title
+  - class
+  - size
+  - width
+  - height
+- Under `component_config` you can use the library props or you own created props
+- Chart library link [react-google-charts](https://react-google-charts.com/)
+
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
