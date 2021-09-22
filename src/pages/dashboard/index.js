@@ -5,6 +5,7 @@ import chartConfiguration from "./config.json";
 
 import MemoizedChart from "../../components/chart";
 import MemoizedNumeric from "../../components/numeric";
+import MemoizedContent from "../../components/content";
 
 function componentsFactory(result) {
   let obj = null;
@@ -15,6 +16,9 @@ function componentsFactory(result) {
       break;
     case "numeric":
       obj = <MemoizedNumeric configuration={result.component_config} />;
+      break;
+    case "content":
+      obj = <MemoizedContent configuration={result.component_config} />;
       break;
     default:
       obj = null;

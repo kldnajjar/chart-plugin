@@ -3,7 +3,6 @@
         "1":{
             "widget":{
                 "type": "numeric",
-                "container":"main",
                 "title": "Repairs",
                 "class": "numeric-container",
                 "size": 6
@@ -15,7 +14,6 @@
         "2":{
             "widget":{
                 "type": "numeric",
-                "container":"main",
                 "title": "Network unlocks",
                 "class": "numeric-container",
                 "size": 6
@@ -27,7 +25,6 @@
         "3":{
             "widget":{
                 "type": "numeric",
-                "container":"main",
                 "title": "Repairs",
                 "class": "numeric-container",
                 "size": 6
@@ -39,7 +36,6 @@
         "4":{
             "widget":{
                 "type": "numeric",
-                "container":"main",
                 "title": "Network unlocks",
                 "class": "numeric-container",
                 "size": 6
@@ -115,7 +111,6 @@
         "6": {
             "widget":{
                 "type": "chart",
-                "container":"main",
                 "title": "Chart 2",
                 "class": "chart-container",
                 "size": 12
@@ -194,7 +189,6 @@
         "1": {
             "widget":{
                 "type": "chart",
-                "container":"side",
                 "title": "Chart 1",
                 "class": "chart-container",
                 "width": "100%"
@@ -233,6 +227,17 @@
                     ]
                 ]
             }
+        },
+        "2":{
+            "widget":{
+                "type": "content",
+                "title": "Notifications",
+                "class": "content-container",
+                "width": "100%"
+            },
+            "component_config":{
+                "data": "You have 7 notifications"
+            }  
         }
     }
 }
