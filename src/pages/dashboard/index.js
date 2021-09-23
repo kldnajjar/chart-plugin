@@ -61,19 +61,36 @@ function drawComponent(result) {
 }
 
 function Dashboard() {
-  const is_side_exist =
-    Object.keys(chartConfiguration.side).length > 0 ? true : false;
+  const is_main_exist = chartConfiguration.main
+    ? Object.keys(chartConfiguration.main).length > 0
+      ? true
+      : false
+    : false;
+
+  const is_side_exist = chartConfiguration.side
+    ? Object.keys(chartConfiguration.side).length > 0
+      ? true
+      : false
+    : false;
 
   return (
     <Container>
       <Row>
-        <Col xl={is_side_exist ? 9 : 12} lg={12}>
-          {drawComponent(chartConfiguration.main)}
-        </Col>
+        {is_main_exist && (
+          <Col xl={is_side_exist ? 9 : 12} lg={12}>
+            {drawComponent(chartConfiguration.main)}
+          </Col>
+        )}
 
-        {is_side_exist && (
+        {is_main_exist && is_side_exist && (
           <Col xl={3} lg={12}>
             {drawComponent(chartConfiguration.side)}
+          </Col>
+        )}
+
+        {!is_main_exist && (
+          <Col>
+            <h2>Your JSON file is not following the structure</h2>
           </Col>
         )}
       </Row>
