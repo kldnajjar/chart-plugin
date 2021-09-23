@@ -27,7 +27,7 @@ function componentsFactory(result) {
 }
 
 function drawComponent(result) {
-  const priorities = Object.keys(result);
+  const priorities = Object.keys(result).sort();
 
   return (
     <Row>
@@ -46,7 +46,7 @@ function drawComponent(result) {
             key={`widget-priority-${item}`}
             style={widget_style.width !== "auto" ? widget_style : {}}
           >
-            <Card className={`chart-container`}>
+            <Card className={`card-container`}>
               {json_obj.widget.title && (
                 <CardHeader>{json_obj.widget.title}</CardHeader>
               )}
@@ -61,15 +61,21 @@ function drawComponent(result) {
 }
 
 function Dashboard() {
+  const is_side_exist =
+    Object.keys(chartConfiguration.side).length > 0 ? true : false;
+
   return (
     <Container>
       <Row>
-        <Col xl={9} lg={12}>
+        <Col xl={is_side_exist ? 9 : 12} lg={12}>
           {drawComponent(chartConfiguration.main)}
         </Col>
-        <Col xl={3} lg={12}>
-          {drawComponent(chartConfiguration.side)}
-        </Col>
+
+        {is_side_exist && (
+          <Col xl={3} lg={12}>
+            {drawComponent(chartConfiguration.side)}
+          </Col>
+        )}
       </Row>
     </Container>
   );
