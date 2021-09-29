@@ -1,101 +1,107 @@
-import React from "react";
+import React, { Component } from "react";
 import { Container, Row, Col, Card, CardHeader, CardBody } from "reactstrap";
 
-import chartConfiguration from "./config.json";
+import { getData } from "../../services/demo";
+import componentsConfig from "./config.json";
 
 import MemoizedChart from "../../components/chart";
 import MemoizedNumeric from "../../components/numeric";
 import MemoizedContent from "../../components/content";
 
-function componentsFactory(result) {
-  let obj = null;
+class Dashboard extends Component {
+  state = {
+    data: [],
+  };
 
-  switch (result.widget.type) {
-    case "chart":
-      obj = <MemoizedChart configuration={result.component_config} />;
-      break;
-    case "numeric":
-      obj = <MemoizedNumeric configuration={result.component_config} />;
-      break;
-    case "content":
-      obj = <MemoizedContent configuration={result.component_config} />;
-      break;
-    default:
-      obj = null;
+  componentDidMount() {
+    const priorities = componentsConfig.sort(this.compare);
+
+    const data = priorities.map((item) => {
+      const result = new Promise((resolve, reject) => {
+        resolve(getData(item.type, item.data));
+      });
+
+      return result;
+    });
+
+    Promise.all(data).then((values) => {
+      this.setState({ data: values });
+    });
   }
-  return obj;
-}
 
-function drawComponent(result) {
-  const priorities = Object.keys(result).sort();
+  componentsFactory(data, item) {
+    let obj = null;
+    switch (item.type) {
+      case "chart":
+        obj = <MemoizedChart configuration={data} />;
+        break;
+      case "numeric":
+        obj = <MemoizedNumeric configuration={data} />;
+        break;
+      case "content":
+        obj = <MemoizedContent configuration={data} />;
+        break;
+      default:
+        obj = null;
+    }
 
-  return (
-    <Row>
-      {priorities.map((item) => {
-        const json_obj = result[item];
+    return obj;
+  }
 
-        const widget_style = {
-          width: `${json_obj.widget.width ? json_obj.widget.width : "auto"}`,
-          height: `${json_obj.widget.height ? json_obj.widget.height : "auto"}`,
-        };
+  compare(a, b) {
+    const priority_a = a.priority;
+    const priority_b = b.priority;
 
-        return (
-          <Col
-            lg={json_obj.widget.size || 12}
-            className={json_obj.widget.class ? json_obj.widget.class : ""}
-            key={`widget-priority-${item}`}
-            style={widget_style.width !== "auto" ? widget_style : {}}
-          >
-            <Card className={`card-container`}>
-              {json_obj.widget.title && (
-                <CardHeader>{json_obj.widget.title}</CardHeader>
-              )}
+    let comparison = 0;
+    if (priority_a > priority_b) {
+      comparison = 1;
+    } else if (priority_a < priority_b) {
+      comparison = -1;
+    }
 
-              <CardBody>{componentsFactory(json_obj)}</CardBody>
-            </Card>
-          </Col>
-        );
-      })}
-    </Row>
-  );
-}
+    return comparison;
+  }
 
-function Dashboard() {
-  const is_main_exist = chartConfiguration.main
-    ? Object.keys(chartConfiguration.main).length > 0
-      ? true
-      : false
-    : false;
+  render() {
+    const { data } = this.state;
+    const priorities = componentsConfig.sort(this.compare);
 
-  const is_side_exist = chartConfiguration.side
-    ? Object.keys(chartConfiguration.side).length > 0
-      ? true
-      : false
-    : false;
+    if (!data.length) return null;
 
-  return (
-    <Container>
-      <Row>
-        {is_main_exist && (
-          <Col xl={is_side_exist ? 9 : 12} lg={12}>
-            {drawComponent(chartConfiguration.main)}
-          </Col>
-        )}
-
-        {is_main_exist && is_side_exist && (
-          <Col xl={3} lg={12}>
-            {drawComponent(chartConfiguration.side)}
-          </Col>
-        )}
-
-        {!is_main_exist && (
+    return (
+      <Container>
+        <Row>
           <Col>
-            <h2>Your JSON file is not following the structure</h2>
+            <Row>
+              {priorities.map((item, index) => {
+                const widget_style = {
+                  width: `${item.width ? item.width : "auto"}`,
+                  height: `${item.height ? item.height : "auto"}`,
+                };
+
+                return (
+                  <Col
+                    lg={item.size || 12}
+                    className={item.class ? item.class : ""}
+                    key={`widget-priority-${index}`}
+                    style={widget_style.width !== "auto" ? widget_style : {}}
+                  >
+                    <Card className={`card-container`}>
+                      {item.title && <CardHeader>{item.title}</CardHeader>}
+
+                      <CardBody>
+                        {this.componentsFactory(data[index], item)}
+                      </CardBody>
+                    </Card>
+                  </Col>
+                );
+              })}
+            </Row>
           </Col>
-        )}
-      </Row>
-    </Container>
-  );
+        </Row>
+      </Container>
+    );
+  }
 }
 
 export default Dashboard;
